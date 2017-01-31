@@ -3,11 +3,11 @@
 
 # Question 1 (Naked Twins)
 Q: How do we use constraint propagation to solve the naked twins problem?  
-A: *Student should provide answer here*
+A: *The naked twins strategy looks for two boxes with identical values in the same unit. Given {'A1': '13', 'B1':'13',  ...} for first columnar unit, we can conclude that 1 and 3 must be in A1 and B1 (although we don't know which is where). We can thus eliminate 1 and 3 from all the boxes in the unit containing this twin boxes (top-left square unit in the example under consideration). The only_choice strategy would now have stricter constraints to fill in the other boxes in square and might lead to further solving.*
 
 # Question 2 (Diagonal Sudoku)
 Q: How do we use constraint propagation to solve the diagonal sudoku problem?  
-A: *Student should provide answer here*
+A: *Diagonal sudoku can be implemented by addition of two extra diagonal units to account for diagonal constraints. The same code will iterate through all the units, and the constarints would thus propogate.*
 
 ### Install
 
