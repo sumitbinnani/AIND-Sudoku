@@ -19,8 +19,31 @@ def naked_twins(values):
         the values dictionary with the naked twins eliminated from peers.
     """
 
-    # Find all instances of naked twins
+    possible_twins = []
+    for unit in unitlist:
+        possible_twins += [((b1, b2), unit) for b1 in unit for b2 in unit if b1 < b2 and len(values[b1]) == 2 and values[b1] == values[b2]]
+    
+    
+    possible_naked_twins = {}
+    for twins, unit in possible_twins:
+        if twins not in possible_naked_twins.keys():
+            possible_naked_twins[twins] = []
+        possible_naked_twins[twins] += [unit]
+    
+    naked_twins = {}
+    for x in possible_naked_twins:
+        if len(possible_naked_twins) > 1:
+            naked_twins[x] = possible_naked_twins[x]
+            
     # Eliminate the naked twins as possibilities for their peers
+    for x in naked_twins:
+        for unit in naked_twins[x]:
+            for box in unit:
+                if box not in x:
+                    for value in values[x[0]]:
+                        values = assign_value(values, box, values[box].replace(value,''))
+    
+    return values
 
 def cross(A, B):
     "Cross product of elements in A and elements in B."
@@ -82,6 +105,7 @@ def reduce_puzzle(values):
     while not stalled:
         solved_values_before = len([box for box in values.keys() if len(values[box]) == 1])
         values = eliminate(values)
+        values = naked_twins(values)
         values = only_choice(values)
         solved_values_after = len([box for box in values.keys() if len(values[box]) == 1])
         stalled = solved_values_before == solved_values_after
