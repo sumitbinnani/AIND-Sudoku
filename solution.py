@@ -146,13 +146,28 @@ def solve(grid):
 rows = 'ABCDEFGHI'
 cols = '123456789'
 
+## List of all the boxes
 boxes = cross(rows, cols)
+
+## Units for Horizontal Contraints
 row_units = [cross(r, cols) for r in rows]
+
+## Units for Vertical Contraints
 column_units = [cross(rows, c) for c in cols]
+
+## Units for Square Contraints
 square_units = [cross(rs, cs) for rs in ('ABC','DEF','GHI') for cs in ('123','456','789')]
+
+## Units for Diagonal Constraints
 diag_units =  [[s+t for s,t in zip(rows,cols)],[s+t for s,t in zip(rows,cols[::-1])]]
+
+## List of all the units
 unitlist = row_units + column_units + square_units + diag_units
+
+## Dict for all the boxes and corresponding list of units
 units = dict((s, [u for u in unitlist if s in u]) for s in boxes)
+
+## Dict for all the peers for given box
 peers = dict((s, set(sum(units[s],[]))-set([s])) for s in boxes)
 
 if __name__ == '__main__':
